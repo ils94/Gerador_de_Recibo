@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome do cliente"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/editTextValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valor do serviço"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/editTextValorPorExtenso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valor por extenso"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/editTextDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Data do serviço"
+            android:singleLine="true" />
+
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Higienização de caixa d'água" />
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desratização" />
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descupinização" />
+
+        <CheckBox
+            android:id="@+id/checkBox4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Controle de baratas, escorpiões e formigas" />
+
+        <EditText
+            android:id="@+id/editTextAdditionalInfo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|start"
+            android:hint="Orçamento de serviço" />
+
+        <Button
+            android:id="@+id/buttonGeneratePDF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gerar recibo" />
+
+    </LinearLayout>
+
+</LinearLayout>
