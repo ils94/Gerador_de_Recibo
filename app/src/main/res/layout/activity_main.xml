@@ -1,83 +1,149 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".MainActivity">
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Informações do Serviço"
+            android:textSize="24sp"
+            android:textColor="#333333"
+            android:paddingTop="24dp"
+            android:paddingBottom="8dp" />
 
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nome do cliente"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
 
         <EditText
             android:id="@+id/editTextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Valor do serviço"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
 
         <EditText
             android:id="@+id/editTextValorPorExtenso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Valor por extenso"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
 
         <EditText
             android:id="@+id/editTextDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Data do serviço"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Serviços"
+            android:textSize="24sp"
+            android:textColor="#333333"
+            android:paddingTop="24dp"
+            android:paddingBottom="8dp" />
 
         <CheckBox
             android:id="@+id/checkBox1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Higienização de caixa d'água" />
+            android:text="Higienização de caixa d'água"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:buttonTint="#333333" />
 
         <CheckBox
             android:id="@+id/checkBox2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Desratização" />
+            android:text="Desratização"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:buttonTint="#333333" />
 
         <CheckBox
             android:id="@+id/checkBox3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descupinização" />
+            android:text="Descupinização"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:buttonTint="#333333" />
 
         <CheckBox
             android:id="@+id/checkBox4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Controle de baratas, escorpiões e formigas" />
+            android:text="Controle de baratas, escorpiões e formigas"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:paddingBottom="16dp"
+            android:buttonTint="#333333" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Orçamento de Serviço"
+            android:textSize="24sp"
+            android:textColor="#333333"
+            android:paddingTop="24dp"
+            android:paddingBottom="8dp" />
 
         <EditText
             android:id="@+id/editTextAdditionalInfo"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="250dp"
             android:gravity="top|start"
-            android:hint="Orçamento de serviço" />
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:textColor="#333333"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/buttonGeneratePDF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gerar recibo" />
+            android:text="Gerar recibo"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_bg"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:padding="16dp"
+            android:layout_marginTop="24dp" />
 
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
