@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -279,8 +280,11 @@ public class MainActivity extends AppCompatActivity {
             document.finishPage(page);
         }
 
+        String timeStamp = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss", Locale.getDefault()).format(new Date());
+        String fileName = "Recibo_" + name.replace(" ", "_") + "_" + timeStamp + ".pdf";
+
         // Create a file to save the PDF
-        File pdfFile = new File(getCacheDir(), "Recibo.pdf");
+        File pdfFile = new File(getCacheDir(), fileName);
 
         try {
             // Write the document content to the file
