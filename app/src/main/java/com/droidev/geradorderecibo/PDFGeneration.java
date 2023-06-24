@@ -99,7 +99,7 @@ public class PDFGeneration {
         textStartY += 16; // Adjust the line spacing
 
         // Create a StaticLayout instance for the description
-        StaticLayout descriptionLayout = new StaticLayout((CharSequence) description, (TextPaint) paint, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        StaticLayout descriptionLayout = new StaticLayout(description, paint, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
         // Draw the description using the StaticLayout
         canvas.save();
@@ -132,7 +132,7 @@ public class PDFGeneration {
         }
 
         // Create a StaticLayout instance for the description
-        StaticLayout garantiaLayout = new StaticLayout((CharSequence) garantiaServico, (TextPaint) paint2, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        StaticLayout garantiaLayout = new StaticLayout(garantiaServico, paint2, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
         // Draw the description using the StaticLayout
         canvas.save();
@@ -144,7 +144,7 @@ public class PDFGeneration {
         textStartY += garantiaLayout.getHeight() + 10;
 
         // Create a StaticLayout instance for the description
-        StaticLayout renovacaoLayout = new StaticLayout((CharSequence) modeloRenovacao, (TextPaint) paint2, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        StaticLayout renovacaoLayout = new StaticLayout(modeloRenovacao, paint2, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
         // Draw the description using the StaticLayout
         canvas.save();
@@ -189,7 +189,7 @@ public class PDFGeneration {
             canvas.drawText(tituloText, tituloTextX, 50, paint5);
 
             // Create a StaticLayout instance for the description
-            StaticLayout additionalInfoLayout = new StaticLayout((CharSequence) additionalInfo, (TextPaint) paint, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+            StaticLayout additionalInfoLayout = new StaticLayout(additionalInfo, paint, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
             textStartY += 50;
 
