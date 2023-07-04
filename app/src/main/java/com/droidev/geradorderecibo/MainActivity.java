@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBox2;
     private CheckBox checkBox3;
     private CheckBox checkBox4;
+
+    private CheckBox checkBox5;
     private EditText editTextAdditionalInfo;
 
     @Override
@@ -44,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
         checkBox2 = findViewById(R.id.checkBox2);
         checkBox3 = findViewById(R.id.checkBox3);
         checkBox4 = findViewById(R.id.checkBox4);
+        checkBox5 = findViewById(R.id.checkBox5);
+
         editTextAdditionalInfo = findViewById(R.id.editTextAdditionalInfo);
+
         Button buttonGeneratePDF = findViewById(R.id.buttonGeneratePDF);
 
         editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -59,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 checkBox1,
                 checkBox2,
                 checkBox3,
-                checkBox4));
+                checkBox4,
+                checkBox5));
 
         // Create a Calendar instance to store the selected date
         Calendar selectedDate = Calendar.getInstance();

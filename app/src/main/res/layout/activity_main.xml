@@ -81,7 +81,6 @@
             android:text="Higienização de caixa d'água"
             android:textColor="#333333"
             android:textSize="16sp"
-            android:paddingBottom="8dp"
             android:buttonTint="#333333" />
 
         <CheckBox
@@ -91,7 +90,6 @@
             android:text="Desratização"
             android:textColor="#333333"
             android:textSize="16sp"
-            android:paddingBottom="8dp"
             android:buttonTint="#333333" />
 
         <CheckBox
@@ -101,7 +99,6 @@
             android:text="Descupinização"
             android:textColor="#333333"
             android:textSize="16sp"
-            android:paddingBottom="8dp"
             android:buttonTint="#333333" />
 
         <CheckBox
@@ -111,13 +108,12 @@
             android:text="Controle de baratas, escorpiões e formigas"
             android:textColor="#333333"
             android:textSize="16sp"
-            android:paddingBottom="16dp"
             android:buttonTint="#333333" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Orçamento de Serviço"
+            android:text="Observações"
             android:textSize="24sp"
             android:textColor="#333333"
             android:paddingTop="24dp"
@@ -132,6 +128,15 @@
             android:padding="12dp"
             android:textColor="#333333"
             android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/checkBox5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assinar documento"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:buttonTint="#333333" />
 
         <Button
             android:id="@+id/buttonGeneratePDF"
