@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBox2;
     private CheckBox checkBox3;
     private CheckBox checkBox4;
-
     private CheckBox checkBox5;
+    private CheckBox checkBox6;
     private EditText editTextAdditionalInfo;
 
     @Override
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         checkBox3 = findViewById(R.id.checkBox3);
         checkBox4 = findViewById(R.id.checkBox4);
         checkBox5 = findViewById(R.id.checkBox5);
+        checkBox6 = findViewById(R.id.checkBox6);
 
         editTextAdditionalInfo = findViewById(R.id.editTextAdditionalInfo);
 
@@ -65,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 checkBox2,
                 checkBox3,
                 checkBox4,
-                checkBox5));
+                checkBox5,
+                checkBox6));
 
         // Create a Calendar instance to store the selected date
         Calendar selectedDate = Calendar.getInstance();

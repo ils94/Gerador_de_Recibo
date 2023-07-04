@@ -30,7 +30,7 @@ public class PDFGeneration {
 
     Miscs miscs = new Miscs();
 
-    public void generatePDF(Context context, EditText editTextName, EditText editTextValue, EditText editTextValorPorExtenso, EditText editTextDate, EditText editTextAdditionalInfo, CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3, CheckBox checkBox4, CheckBox checkBox5) {
+    public void generatePDF(Context context, EditText editTextName, EditText editTextValue, EditText editTextValorPorExtenso, EditText editTextDate, EditText editTextAdditionalInfo, CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3, CheckBox checkBox4, CheckBox checkBox5, CheckBox checkBox6) {
         // Get the input values
         String name = editTextName.getText().toString();
         String value = editTextValue.getText().toString();
@@ -163,7 +163,7 @@ public class PDFGeneration {
 
         linhaData(canvas, paint3, textStartY, editTextDate);
 
-        linhaDeAssinatura(context, canvas, textStartY, checkBox5);
+        linhaDeAssinatura(context, canvas, textStartY, checkBox5, checkBox6);
 
         // Finish the page
         document.finishPage(page);
@@ -209,7 +209,7 @@ public class PDFGeneration {
 
             linhaData(canvas, paint3, textStartY, editTextDate);
 
-            linhaDeAssinatura(context, canvas, textStartY, checkBox5);
+            linhaDeAssinatura(context, canvas, textStartY, checkBox5, checkBox6);
 
             // Finish the page
             document.finishPage(page);
@@ -253,9 +253,14 @@ public class PDFGeneration {
         return paint;
     }
 
-    private void linhaDeAssinatura(Context context, Canvas canvas, float Y, CheckBox checkBox) {
+    private void linhaDeAssinatura(Context context, Canvas canvas, float Y, CheckBox checkBox1, CheckBox checkBox2) {
 
-        boolean checkbox = checkBox.isChecked();
+        boolean checkbox1 = checkBox1.isChecked();
+        boolean checkbox2 = checkBox2.isChecked();
+
+        Bitmap signatureBitmap;
+
+        int position;
 
         TextPaint paint = textoConfig(context, 20, R.color.black);
 
@@ -264,20 +269,30 @@ public class PDFGeneration {
         // Define the line properties
         float lineY = Y + 20 + 25; // Calculate the y-coordinate for the line
 
-        if (checkbox) {
+        if (checkbox1) {
 
-            // Load the signature image from resources
-            Bitmap signatureBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.assinatura);
+            if (checkbox2) {
+
+                signatureBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.extenso);
+
+                position = 10;
+
+            } else {
+
+                signatureBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.rubrica);
+
+                position = 15;
+            }
 
             // Define the desired width and height for the scaled image
-            int desiredWidth = 150; // Set your desired width
+            int desiredWidth = 500; // Set your desired width
             int desiredHeight = 50; // Set your desired height
 
             // Scale the signature image to the desired width and height
             Bitmap scaledSignatureBitmap = Bitmap.createScaledBitmap(signatureBitmap, desiredWidth, desiredHeight, false);
 
             // Calculate the position of the line and the image
-            float imageY = lineY - scaledSignatureBitmap.getHeight() + 15; // Position the image above the line
+            float imageY = lineY - scaledSignatureBitmap.getHeight() + position; // Position the image above the line
 
             // Calculate the x-coordinate to center the image
             int imageX = (canvas.getWidth() - scaledSignatureBitmap.getWidth()) / 2;
