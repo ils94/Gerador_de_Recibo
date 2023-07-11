@@ -1,13 +1,20 @@
 package com.droidev.geradorderecibo;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBox6;
     private EditText editTextAdditionalInfo;
 
+    private TinyDB tinyDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         PDFGeneration pdfGeneration = new PDFGeneration();
         Miscs miscs = new Miscs();
+
+        tinyDB = new TinyDB(MainActivity.this);
 
         // Initialize UI components
         editTextName = findViewById(R.id.editTextName);
@@ -109,4 +120,100 @@ public class MainActivity extends AppCompatActivity {
         miscs.deleteCache(MainActivity.this);
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.qrcode) {
+
+            String PIX = tinyDB.getString("PIX");
+
+            if (!PIX.equals("")) {
+
+                Intent myIntent = new Intent(MainActivity.this, QRCodeActivity.class);
+                myIntent.putExtra("content", PIX);
+                startActivity(myIntent);
+            } else {
+
+                Toast.makeText(MainActivity.this, "Nenhuma chave PIX salva.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (id == R.id.cadastrarchave) {
+
+            salvarPIX(MainActivity.this);
+        }
+
+        return false;
+    }
+
+    public void salvarPIX(Context context) {
+
+        EditText chavePIX = new EditText(context);
+        chavePIX.setHint("Chave PIX");
+        chavePIX.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        LinearLayout lay = new LinearLayout(context);
+        lay.setOrientation(LinearLayout.VERTICAL);
+        lay.addView(chavePIX);
+
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setCancelable(false)
+                .setTitle("Salvar chave PIX")
+                .setMessage("Insira sua chave PIX abaixo.")
+                .setPositiveButton("Salvar", null)
+                .setNegativeButton("Cancelar", null)
+                .setNeutralButton("Limpar", null)
+                .setView(lay)
+                .show();
+
+        chavePIX.setText(tinyDB.getString("PIX"));
+
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        Button neutralButton = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+
+        positiveButton.setOnClickListener(v -> {
+
+            if (!chavePIX.getText().toString().isEmpty()) {
+
+                String PIXString = chavePIX.getText().toString();
+
+                tinyDB.remove("PIX");
+
+                tinyDB.putString("PIX", PIXString);
+
+                Toast.makeText(context, "Chave PIX salva.", Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
+            } else {
+
+                Toast.makeText(context, "Erro, campo vazio.", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        negativeButton.setOnClickListener(v -> {
+
+            dialog.dismiss();
+
+        });
+
+        neutralButton.setOnClickListener(v -> {
+
+            chavePIX.setText("");
+
+        });
+
+    }
+
 }
