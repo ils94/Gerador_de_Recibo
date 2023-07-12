@@ -41,13 +41,13 @@ public class PIXSalvarActivity extends AppCompatActivity {
 
         buttonSalvarPIX.setOnClickListener(view -> {
 
-            String PIXQRCodeBBString = editTextPIXQRCodeBB.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
-            String PIXQRCodeCaixaString = editTextPIXQRCodeCaixa.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
-            String PIXQRCodeNubankString = editTextPIXQRCodeNubank.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
+            String PIXQRCodeBBString = editTextPIXQRCodeBB.getText().toString();
+            String PIXQRCodeCaixaString = editTextPIXQRCodeCaixa.getText().toString();
+            String PIXQRCodeNubankString = editTextPIXQRCodeNubank.getText().toString();
 
-            String PIXChaveBBString = editTextPIXChaveBB.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
-            String PIXChaveCaixaString = editTextPIXChaveCaixa.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
-            String PIXChaveNubankString = editTextPIXChaveNubank.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
+            String PIXChaveBBString = editTextPIXChaveBB.getText().toString();
+            String PIXChaveCaixaString = editTextPIXChaveCaixa.getText().toString();
+            String PIXChaveNubankString = editTextPIXChaveNubank.getText().toString();
 
             tinyDB.remove("PIXQRCodeBB");
             tinyDB.remove("PIXQRCodeCaixa");

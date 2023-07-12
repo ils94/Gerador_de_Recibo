@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,21 +67,18 @@ public class QRCodeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        bancoChavePIX.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        bancoChavePIX.setOnClickListener(view -> {
 
-                String textToCopy = bancoChavePIX.getText().toString();
+            String textToCopy = bancoChavePIX.getText().toString();
 
-                // Copy the text to the clipboard
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Chave PIX", textToCopy);
-                if (clipboard != null) {
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(QRCodeActivity.this, "Chave PIX copiada.", Toast.LENGTH_SHORT).show();
-                }
-
+            // Copy the text to the clipboard
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Chave PIX", textToCopy);
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(QRCodeActivity.this, "Chave PIX copiada.", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 

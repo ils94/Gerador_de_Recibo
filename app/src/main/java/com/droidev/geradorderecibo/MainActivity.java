@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
         tinyDB = new TinyDB(MainActivity.this);
 
-        // Initialize UI components
         editTextName = findViewById(R.id.editTextName);
         editTextValue = findViewById(R.id.editTextValue);
         editTextValorPorExtenso = findViewById(R.id.editTextValorPorExtenso);
@@ -68,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
-        // Set OnClickListener for the Generate PDF button
         buttonGeneratePDF.setOnClickListener(v -> pdfGeneration.generatePDF(MainActivity.this,
                 editTextName,
                 editTextValue,
@@ -82,12 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 checkBox5,
                 checkBox6));
 
-        // Create a Calendar instance to store the selected date
         Calendar selectedDate = Calendar.getInstance();
 
-        // Create a DatePickerDialog.OnDateSetListener to handle the selected date
         DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
-            // Update the selected date
+
             selectedDate.set(Calendar.YEAR, year);
             selectedDate.set(Calendar.MONTH, month);
             selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -98,24 +94,19 @@ public class MainActivity extends AppCompatActivity {
             editTextDate.setText(formattedDate);
         };
 
-        // Set an OnClickListener on the editTextDate to show the DatePickerDialog
         editTextDate.setOnClickListener(v -> {
 
-            // Hide the keyboard
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editTextDate.getWindowToken(), 0);
 
-            // Get the current date values
             int year = selectedDate.get(Calendar.YEAR);
             int month = selectedDate.get(Calendar.MONTH);
             int dayOfMonth = selectedDate.get(Calendar.DAY_OF_MONTH);
 
-            // Create and show the DatePickerDialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this, dateSetListener, year, month, dayOfMonth);
             datePickerDialog.show();
         });
 
-        // Set the editTextDate as non-focusable and non-editable
         editTextDate.setFocusable(false);
         editTextDate.setClickable(true);
 
@@ -144,63 +135,46 @@ public class MainActivity extends AppCompatActivity {
             builder.setCancelable(false);
             builder.setTitle("Escolha o banco");
 
-            // Create the radio button options
             String[] radioButtonOptions = {"Banco do Brasil", "Caixa Econômica Federal", "Nubank"};
 
-            // Set up the radio buttons
             builder.setSingleChoiceItems(radioButtonOptions, selectedRadioButton[0],
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            selectedRadioButton[0] = which;
-                        }
-                    });
+                    (dialog, which) -> selectedRadioButton[0] = which);
 
-            // Set up the buttons
+
             builder.setPositiveButton("Abrir", null);
-            builder.setNegativeButton("Fechar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Handle the Cancel button click
-                    dialog.dismiss();
-                }
+            builder.setNegativeButton("Fechar", (dialog, which) -> {
+
+                dialog.dismiss();
             });
 
-            // Create and show the AlertDialog
             final AlertDialog dialog = builder.create();
-            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(DialogInterface dialogInterface) {
-                    // Handle the Open button click
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
-                        if (selectedRadioButton[0] != -1) {
-                            // Perform code based on the selected radio button
-                            switch (selectedRadioButton[0]) {
-                                case 0:
-                                    // Code for Option 1
+            dialog.setOnShowListener(dialogInterface -> {
 
-                                    abrirIntentPIX("PIXQRCodeBB", "PIXChaveBB", "Banco do Brasil");
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
+                    if (selectedRadioButton[0] != -1) {
 
-                                    break;
-                                case 1:
-                                    // Code for Option 2
+                        switch (selectedRadioButton[0]) {
+                            case 0:
 
-                                    abrirIntentPIX("PIXQRCodeCaixa", "PIXChaveCaixa", "Caixa Econômica Federal");
+                                abrirIntentPIX("PIXQRCodeBB", "PIXChaveBB", "Banco do Brasil");
 
-                                    break;
-                                case 2:
-                                    // Code for Option 3
+                                break;
+                            case 1:
 
-                                    abrirIntentPIX("PIXQRCodeNubank", "PIXChaveNubank", "Nubank");
+                                abrirIntentPIX("PIXQRCodeCaixa", "PIXChaveCaixa", "Caixa Econômica Federal");
 
-                                    break;
-                            }
-                        } else {
-                            // No radio button selected
-                            Toast.makeText(MainActivity.this, "Você deve selecionar um dos três bancos.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 2:
+
+                                abrirIntentPIX("PIXQRCodeNubank", "PIXChaveNubank", "Nubank");
+
+                                break;
                         }
-                    });
-                }
+                    } else {
+                        // No radio button selected
+                        Toast.makeText(MainActivity.this, "Você deve selecionar um dos três bancos.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
 
             dialog.show();

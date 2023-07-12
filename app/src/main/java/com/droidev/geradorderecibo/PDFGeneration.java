@@ -31,7 +31,7 @@ public class PDFGeneration {
     Miscs miscs = new Miscs();
 
     public void generatePDF(Context context, EditText editTextName, EditText editTextValue, EditText editTextValorPorExtenso, EditText editTextDate, EditText editTextAdditionalInfo, CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3, CheckBox checkBox4, CheckBox checkBox5, CheckBox checkBox6) {
-        // Get the input values
+
         String name = editTextName.getText().toString();
         String value = editTextValue.getText().toString();
         String porExtenso = editTextValorPorExtenso.getText().toString();
@@ -57,18 +57,15 @@ public class PDFGeneration {
 
         String modeloRenovacao = "Proposta de Reestruturação do Modelo de Serviço: Abordagem de Prestação de Serviço Unitária. O serviço em questão será executado em uma única ocasião, ficando a critério do contratante a solicitação ou não de sua renovação. A garantia será fornecida quando necessária ou mediante solicitação expressa do contratante.";
 
-        // Create a new PDF document
         PdfDocument document = new PdfDocument();
 
-        // Create a page with the desired dimensions
-        int pageWidth = 612; // 8.5 inches (612pt) assuming 72pt per inch
-        int pageHeight = 792; // 11 inches (792pt) assuming 72pt per inch
+        int pageWidth = 612;
+        int pageHeight = 792;
         int pageNumber = 1;
 
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create();
         PdfDocument.Page page = document.startPage(pageInfo);
 
-        // Get the canvas for drawing on the page
         Canvas canvas = page.getCanvas();
 
         TextPaint paint = textoConfig(context, 14, R.color.black);
@@ -79,44 +76,34 @@ public class PDFGeneration {
 
         TextPaint paint4 = textoConfig(context, 30, R.color.blue);
 
-        // Set up the logo dimensions and margins
         float margin = 32;
         float availableWidth = canvas.getWidth() - 2 * margin;
 
-        // Load the logo image from resources
         Bitmap logoBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo);
 
-        // Calculate the scaling factor to fit the logo within the available width
         float logoScale = availableWidth / logoBitmap.getWidth();
 
-        // Calculate the scaled height of the logo
         float logoHeight = logoBitmap.getHeight() * logoScale;
 
-        // Draw the logo at the top of the page
         RectF logoRect = new RectF(margin, margin, canvas.getWidth() - margin, margin + logoHeight);
         canvas.drawBitmap(logoBitmap, null, logoRect, null);
 
-        // Draw the receipt information below the logo
         float textStartY = margin + logoHeight + 40;
 
         // Draw the receipt label
         String receiptLabel = "VALOR TOTAL: R$ " + value;
         canvas.drawText(receiptLabel, margin, textStartY, paint4);
-        textStartY += 16; // Adjust the line spacing
+        textStartY += 16;
 
-        // Create a StaticLayout instance for the description
         StaticLayout descriptionLayout = new StaticLayout(description, paint, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
-        // Draw the description using the StaticLayout
         canvas.save();
         canvas.translate(margin, textStartY);
         descriptionLayout.draw(canvas);
         canvas.restore();
 
-        // Calculate the vertical position for the next line
         textStartY += descriptionLayout.getHeight() + 30;
 
-        // Draw the checkboxes
         if (checkbox1) {
             canvas.drawText("     • Higienização de caixa d'água.", margin, textStartY, paint);
             textStartY += 20;
@@ -137,38 +124,30 @@ public class PDFGeneration {
             textStartY += 20;
         }
 
-        // Create a StaticLayout instance for the description
         StaticLayout garantiaLayout = new StaticLayout(garantiaServico, paint2, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
-        // Draw the description using the StaticLayout
         canvas.save();
         canvas.translate(margin, textStartY);
         garantiaLayout.draw(canvas);
         canvas.restore();
 
-        // Calculate the vertical position for the next line
         textStartY += garantiaLayout.getHeight() + 10;
 
-        // Create a StaticLayout instance for the description
         StaticLayout renovacaoLayout = new StaticLayout(modeloRenovacao, paint2, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
-        // Draw the description using the StaticLayout
         canvas.save();
         canvas.translate(margin, textStartY);
         renovacaoLayout.draw(canvas);
         canvas.restore();
 
-        // Calculate the vertical position for the next line
         textStartY += renovacaoLayout.getHeight() + 40;
 
         linhaData(canvas, paint3, textStartY, editTextDate);
 
         linhaDeAssinatura(context, canvas, textStartY, checkBox5, checkBox6);
 
-        // Finish the page
         document.finishPage(page);
 
-        // Check if additional info is present
         String additionalInfo = editTextAdditionalInfo.getText().toString().trim();
 
         if (!additionalInfo.isEmpty()) {
@@ -176,30 +155,23 @@ public class PDFGeneration {
             pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 2).create();
             page = document.startPage(pageInfo);
 
-            // Get the canvas for drawing on the page
             canvas = page.getCanvas();
 
-            // Draw the receipt information below the logo
             textStartY = 32;
 
             TextPaint paint5 = textoConfig(context, 30, R.color.black);
 
-            // Define the text properties for the centered text
             String tituloText = "Observações";
 
-            // Calculate the x-coordinate where the text should start
-            int tituloTextX = canvas.getWidth() / 2; // Centered horizontally
+            int tituloTextX = canvas.getWidth() / 2;
 
-            // Draw the centered text
             paint5.setTextAlign(Paint.Align.CENTER);
             canvas.drawText(tituloText, tituloTextX, 50, paint5);
 
-            // Create a StaticLayout instance for the description
             StaticLayout additionalInfoLayout = new StaticLayout(additionalInfo, paint, (int) availableWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
             textStartY += 50;
 
-            // Draw the description using the StaticLayout
             canvas.save();
             canvas.translate(margin, textStartY);
             additionalInfoLayout.draw(canvas);
@@ -211,26 +183,21 @@ public class PDFGeneration {
 
             linhaDeAssinatura(context, canvas, textStartY, checkBox5, checkBox6);
 
-            // Finish the page
             document.finishPage(page);
         }
 
         String timeStamp = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss", Locale.getDefault()).format(new Date());
         String fileName = "Recibo_" + name.replace(" ", "_") + "_" + timeStamp + ".pdf";
 
-        // Create a file to save the PDF
         File pdfFile = new File(context.getCacheDir(), fileName);
 
         try {
-            // Write the document content to the file
             FileOutputStream outputStream = new FileOutputStream(pdfFile);
             document.writeTo(outputStream);
 
-            // Close the document and file
             document.close();
             outputStream.close();
 
-            // Share the PDF file
             Uri pdfUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileprovider", pdfFile);
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("application/pdf");
@@ -266,8 +233,7 @@ public class PDFGeneration {
 
         TextPaint paint2 = textoConfig(context, 12, R.color.black);
 
-        // Define the line properties
-        float lineY = Y + 20 + 25; // Calculate the y-coordinate for the line
+        float lineY = Y + 20 + 25;
 
         if (checkbox1) {
 
@@ -284,61 +250,45 @@ public class PDFGeneration {
                 position = 15;
             }
 
-            // Define the desired width and height for the scaled image
-            int desiredWidth = 500; // Set your desired width
-            int desiredHeight = 50; // Set your desired height
+            int desiredWidth = 500;
+            int desiredHeight = 50;
 
-            // Scale the signature image to the desired width and height
             Bitmap scaledSignatureBitmap = Bitmap.createScaledBitmap(signatureBitmap, desiredWidth, desiredHeight, false);
 
-            // Calculate the position of the line and the image
-            float imageY = lineY - scaledSignatureBitmap.getHeight() + position; // Position the image above the line
+            float imageY = lineY - scaledSignatureBitmap.getHeight() + position;
 
-            // Calculate the x-coordinate to center the image
             int imageX = (canvas.getWidth() - scaledSignatureBitmap.getWidth()) / 2;
 
-            // Draw the scaled signature image above the line
             RectF imageRect = new RectF(imageX, imageY, imageX + scaledSignatureBitmap.getWidth(), imageY + scaledSignatureBitmap.getHeight());
             canvas.drawBitmap(scaledSignatureBitmap, null, imageRect, null);
         }
 
-        // Draw the line
         canvas.drawLine(32, lineY, canvas.getWidth() - 32, lineY, paint);
 
-        // Define the text properties for the centered text
         String centeredText = "Assinatura do prestador de serviço.";
 
-        // Calculate the x-coordinate where the text should start
-        int centeredTextX = canvas.getWidth() / 2; // Centered horizontally
+        int centeredTextX = canvas.getWidth() / 2;
 
-        // Calculate the y-coordinate where the text should start
-        float centeredTextY = lineY + 2 * 10; // Position below the line
+        float centeredTextY = lineY + 2 * 10;
 
-        // Draw the centered text
         paint2.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(centeredText, centeredTextX, centeredTextY, paint2);
     }
 
     private void linhaData(Canvas canvas, TextPaint paint, float Y, EditText editTextDate) {
 
-        // Get the current date
         String currentDate = miscs.dataHoje(editTextDate.getText().toString());
 
-        // Set the maximum length of the date string
         int maxDateLength = 35;
 
-        // Truncate the date string if it exceeds the maximum length
         if (currentDate.length() > maxDateLength) {
             currentDate = currentDate.substring(0, maxDateLength);
         }
 
-        // Calculate the width of the date text
         float dateTextWidth = paint.measureText(currentDate);
 
-        // Draw the date aligned to the right, adjusting the x-coordinate
         float dateStartX = canvas.getWidth() - dateTextWidth - 32;
 
-        // Draw the date string
         canvas.drawText(currentDate, dateStartX, Y, paint);
     }
 
