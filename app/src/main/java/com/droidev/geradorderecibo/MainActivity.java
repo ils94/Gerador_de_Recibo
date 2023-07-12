@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -135,84 +137,97 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.qrcode) {
 
-            String PIX = tinyDB.getString("PIX");
+            final int[] selectedRadioButton = {-1};
 
-            if (!PIX.equals("")) {
+            // Create AlertDialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setTitle("Escolha o banco");
 
-                Intent myIntent = new Intent(MainActivity.this, QRCodeActivity.class);
-                myIntent.putExtra("content", PIX);
-                startActivity(myIntent);
-            } else {
+            // Create the radio button options
+            String[] radioButtonOptions = {"Banco do Brasil", "Caixa Econômica Federal", "Nubank"};
 
-                Toast.makeText(MainActivity.this, "Nenhuma chave PIX salva.", Toast.LENGTH_SHORT).show();
-            }
+            // Set up the radio buttons
+            builder.setSingleChoiceItems(radioButtonOptions, selectedRadioButton[0],
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            selectedRadioButton[0] = which;
+                        }
+                    });
+
+            // Set up the buttons
+            builder.setPositiveButton("Abrir", null);
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Handle the Cancel button click
+                    dialog.dismiss();
+                }
+            });
+
+            // Create and show the AlertDialog
+            final AlertDialog dialog = builder.create();
+            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialogInterface) {
+                    // Handle the Open button click
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
+                        if (selectedRadioButton[0] != -1) {
+                            // Perform code based on the selected radio button
+                            switch (selectedRadioButton[0]) {
+                                case 0:
+                                    // Code for Option 1
+
+                                    abrirIntentPIX("PIXBB", "Banco do Brasil");
+
+                                    break;
+                                case 1:
+                                    // Code for Option 2
+
+                                    abrirIntentPIX("PIXCaixa", "Caixa Econômica Federal");
+
+                                    break;
+                                case 2:
+                                    // Code for Option 3
+
+                                    abrirIntentPIX("PIXNubank", "Nubank");
+
+                                    break;
+                            }
+                        } else {
+                            // No radio button selected
+                            Toast.makeText(MainActivity.this, "Você deve selecionar um dos três bancos.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+
+            dialog.show();
+
         }
 
         if (id == R.id.cadastrarchave) {
 
-            salvarPIX(MainActivity.this);
+            Intent myIntent = new Intent(MainActivity.this, PIXSalvarActivity.class);
+            startActivity(myIntent);
         }
 
         return false;
     }
 
-    public void salvarPIX(Context context) {
+    public void abrirIntentPIX(String PIXBanco, String bancoNome) {
 
-        EditText chavePIX = new EditText(context);
-        chavePIX.setHint("Chave PIX");
-        chavePIX.setInputType(InputType.TYPE_CLASS_TEXT);
+        String s = tinyDB.getString(PIXBanco);
 
-        LinearLayout lay = new LinearLayout(context);
-        lay.setOrientation(LinearLayout.VERTICAL);
-        lay.addView(chavePIX);
-
-        AlertDialog dialog = new AlertDialog.Builder(context)
-                .setCancelable(false)
-                .setTitle("Salvar chave PIX")
-                .setMessage("Insira sua chave PIX abaixo.")
-                .setPositiveButton("Salvar", null)
-                .setNegativeButton("Cancelar", null)
-                .setNeutralButton("Limpar", null)
-                .setView(lay)
-                .show();
-
-        chavePIX.setText(tinyDB.getString("PIX"));
-
-        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        Button neutralButton = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
-
-        positiveButton.setOnClickListener(v -> {
-
-            if (!chavePIX.getText().toString().isEmpty()) {
-
-                String PIXString = chavePIX.getText().toString();
-
-                tinyDB.remove("PIX");
-
-                tinyDB.putString("PIX", PIXString);
-
-                Toast.makeText(context, "Chave PIX salva.", Toast.LENGTH_SHORT).show();
-
-                dialog.dismiss();
-            } else {
-
-                Toast.makeText(context, "Erro, campo vazio.", Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
-        negativeButton.setOnClickListener(v -> {
-
-            dialog.dismiss();
-
-        });
-
-        neutralButton.setOnClickListener(v -> {
-
-            chavePIX.setText("");
-
-        });
+        if (!s.equals("")) {
+            Intent myIntent = new Intent(MainActivity.this, QRCodeActivity.class);
+            myIntent.putExtra("content", s);
+            myIntent.putExtra("nome", bancoNome);
+            startActivity(myIntent);
+        } else {
+            Toast.makeText(MainActivity.this, "Nenhuma chave PIX " + bancoNome + " salva.", Toast.LENGTH_SHORT).show();
+        }
 
     }
 

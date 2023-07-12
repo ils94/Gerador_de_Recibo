@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
@@ -18,6 +19,7 @@ import java.io.FileOutputStream;
 public class QRCodeActivity extends AppCompatActivity {
 
     ImageView imageView;
+    TextView bancoNome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +28,15 @@ public class QRCodeActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.qrcode);
 
-        setTitle("Blink QR Code");
+        bancoNome = findViewById(R.id.bancoNome);
 
-        TinyDB tinyDB = new TinyDB(QRCodeActivity.this);
+        setTitle("QR Code PIX");
 
         Intent intent = getIntent();
         String content = intent.getStringExtra("content");
+        String banco = intent.getStringExtra("nome");
+
+        bancoNome.setText(banco);
 
 
         try {

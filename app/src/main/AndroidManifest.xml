@@ -13,9 +13,12 @@
         android:theme="@style/Theme.GeradorDeRecibo"
         tools:targetApi="31">
         <activity
+            android:name=".PIXSalvarActivity"
+            android:exported="false" />
+        <activity
             android:name=".QRCodeActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
