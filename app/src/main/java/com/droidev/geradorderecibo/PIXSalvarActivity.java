@@ -3,17 +3,19 @@ package com.droidev.geradorderecibo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class PIXSalvarActivity extends AppCompatActivity {
 
-    private EditText editTextPIXBB;
-    private EditText editTextPIXCaixa;
-    private EditText editTextPIXNubank;
+    private EditText editTextPIXQRCodeBB;
+    private EditText editTextPIXQRCodeCaixa;
+    private EditText editTextPIXQRCodeNubank;
+
+    private EditText editTextPIXChaveBB;
+    private EditText editTextPIXChaveCaixa;
+    private EditText editTextPIXChaveNubank;
 
     private TinyDB tinyDB;
 
@@ -27,25 +29,41 @@ public class PIXSalvarActivity extends AppCompatActivity {
         tinyDB = new TinyDB(PIXSalvarActivity.this);
 
         // Initialize UI components
-        editTextPIXBB = findViewById(R.id.editTextPIXBB);
-        editTextPIXCaixa = findViewById(R.id.editTextPIXCaixa);
-        editTextPIXNubank = findViewById(R.id.editTextPIXNubank);
+        editTextPIXQRCodeBB = findViewById(R.id.editTextPIXQRCodeBB);
+        editTextPIXQRCodeCaixa = findViewById(R.id.editTextPIXQRCodeCaixa);
+        editTextPIXQRCodeNubank = findViewById(R.id.editTextPIXQRCodeNubank);
+
+        editTextPIXChaveBB = findViewById(R.id.editTextPIXBBChave);
+        editTextPIXChaveCaixa = findViewById(R.id.editTextPIXCaixaChave);
+        editTextPIXChaveNubank = findViewById(R.id.editTextPIXNubankChave);
 
         Button buttonSalvarPIX = findViewById(R.id.buttonSalvarPIX);
 
         buttonSalvarPIX.setOnClickListener(view -> {
 
-            String PIXBBString = editTextPIXBB.getText().toString();
-            String PIXCaixaString = editTextPIXCaixa.getText().toString();
-            String PIXNubankString = editTextPIXNubank.getText().toString();
+            String PIXQRCodeBBString = editTextPIXQRCodeBB.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
+            String PIXQRCodeCaixaString = editTextPIXQRCodeCaixa.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
+            String PIXQRCodeNubankString = editTextPIXQRCodeNubank.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
 
-            tinyDB.remove("PIXBB");
-            tinyDB.remove("PIXCaixa");
-            tinyDB.remove("PIXNubank");
+            String PIXChaveBBString = editTextPIXChaveBB.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
+            String PIXChaveCaixaString = editTextPIXChaveCaixa.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
+            String PIXChaveNubankString = editTextPIXChaveNubank.getText().toString().replace(" ", "").replace("\n", "").replace("\r", "").replace("\n\r", "");
 
-            tinyDB.putString("PIXBB", PIXBBString);
-            tinyDB.putString("PIXCaixa", PIXCaixaString);
-            tinyDB.putString("PIXNubank", PIXNubankString);
+            tinyDB.remove("PIXQRCodeBB");
+            tinyDB.remove("PIXQRCodeCaixa");
+            tinyDB.remove("PIXQRCodeNubank");
+
+            tinyDB.remove("PIXChaveBB");
+            tinyDB.remove("PIXChaveCaixa");
+            tinyDB.remove("PIXChaveNubank");
+
+            tinyDB.putString("PIXQRCodeBB", PIXQRCodeBBString);
+            tinyDB.putString("PIXQRCodeCaixa", PIXQRCodeCaixaString);
+            tinyDB.putString("PIXQRCodeNubank", PIXQRCodeNubankString);
+
+            tinyDB.putString("PIXChaveBB", PIXChaveBBString);
+            tinyDB.putString("PIXChaveCaixa", PIXChaveCaixaString);
+            tinyDB.putString("PIXChaveNubank", PIXChaveNubankString);
 
             Toast.makeText(PIXSalvarActivity.this, "Chave PIX salvas.", Toast.LENGTH_SHORT).show();
 
@@ -59,8 +77,12 @@ public class PIXSalvarActivity extends AppCompatActivity {
 
     public void carregarChavesPIX() {
 
-        editTextPIXBB.setText(tinyDB.getString("PIXBB"));
-        editTextPIXCaixa.setText(tinyDB.getString("PIXCaixa"));
-        editTextPIXNubank.setText(tinyDB.getString("PIXNubank"));
+        editTextPIXQRCodeBB.setText(tinyDB.getString("PIXQRCodeBB"));
+        editTextPIXQRCodeCaixa.setText(tinyDB.getString("PIXQRCodeCaixa"));
+        editTextPIXQRCodeNubank.setText(tinyDB.getString("PIXQRCodeNubank"));
+
+        editTextPIXChaveBB.setText(tinyDB.getString("PIXChaveBB"));
+        editTextPIXChaveCaixa.setText(tinyDB.getString("PIXChaveCaixa"));
+        editTextPIXChaveNubank.setText(tinyDB.getString("PIXChaveNubank"));
     }
 }

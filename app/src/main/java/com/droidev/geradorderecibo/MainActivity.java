@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Set up the buttons
             builder.setPositiveButton("Abrir", null);
-            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("Fechar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Handle the Cancel button click
@@ -179,19 +179,19 @@ public class MainActivity extends AppCompatActivity {
                                 case 0:
                                     // Code for Option 1
 
-                                    abrirIntentPIX("PIXBB", "Banco do Brasil");
+                                    abrirIntentPIX("PIXQRCodeBB", "PIXChaveBB", "Banco do Brasil");
 
                                     break;
                                 case 1:
                                     // Code for Option 2
 
-                                    abrirIntentPIX("PIXCaixa", "Caixa Econômica Federal");
+                                    abrirIntentPIX("PIXQRCodeCaixa", "PIXChaveCaixa", "Caixa Econômica Federal");
 
                                     break;
                                 case 2:
                                     // Code for Option 3
 
-                                    abrirIntentPIX("PIXNubank", "Nubank");
+                                    abrirIntentPIX("PIXQRCodeNubank", "PIXChaveNubank", "Nubank");
 
                                     break;
                             }
@@ -216,17 +216,19 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public void abrirIntentPIX(String PIXBanco, String bancoNome) {
+    public void abrirIntentPIX(String PIXQRCodeBanco, String PIXChaveBanco, String bancoNome) {
 
-        String s = tinyDB.getString(PIXBanco);
+        String string1 = tinyDB.getString(PIXQRCodeBanco);
+        String string2 = tinyDB.getString(PIXChaveBanco);
 
-        if (!s.equals("")) {
+        if (!string1.equals("")) {
             Intent myIntent = new Intent(MainActivity.this, QRCodeActivity.class);
-            myIntent.putExtra("content", s);
+            myIntent.putExtra("qrcode", string1);
+            myIntent.putExtra("chave", string2);
             myIntent.putExtra("nome", bancoNome);
             startActivity(myIntent);
         } else {
-            Toast.makeText(MainActivity.this, "Nenhuma chave PIX " + bancoNome + " salva.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Nenhuma QR Code PIX para esse banco.", Toast.LENGTH_SHORT).show();
         }
 
     }

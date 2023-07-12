@@ -18,7 +18,7 @@
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/editTextPIXBB"
+            android:id="@+id/editTextPIXQRCodeBB"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginBottom="5dp"
@@ -47,12 +47,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Caixa Economica Federal"
+            android:text="Caixa Econômica Federal"
             android:textColor="#333333"
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/editTextPIXCaixa"
+            android:id="@+id/editTextPIXQRCodeCaixa"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginBottom="5dp"
@@ -86,7 +86,7 @@
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/editTextPIXNubank"
+            android:id="@+id/editTextPIXQRCodeNubank"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginBottom="5dp"
